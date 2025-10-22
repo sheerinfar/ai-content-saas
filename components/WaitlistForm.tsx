@@ -1,22 +1,51 @@
 'use client'
 
 import { useState } from 'react'
+import { createClient } from '@supabase/supabase-js'
+
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+)
 
 export default function WaitlistForm() {
   const [email, setEmail] = useState('')
   const [submitted, setSubmitted] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
-    
-    // Simulate API call
-    setTimeout(() => {
-      setLoading(false)
+    setError('')
+
+    try {
+      // Save to Supabase
+const { data, error: supabaseError } = await supabase
+  .from('waitlist')
+  .insert([{ email }])
+  .select()
+
+console.log('INSERT RESULT:', { data, error: supabaseError })
+
+      if (supabaseError) {
+        if (supabaseError.code === '23505') {
+          setError('This email is already on the waitlist!')
+        } else {
+          setError('Something went wrong. Please try again.')
+        }
+        setLoading(false)
+        return
+      }
+
+      // Success!
       setSubmitted(true)
       setEmail('')
-    }, 1000)
+    } catch (err) {
+      setError('Something went wrong. Please try again.')
+    }
+
+    setLoading(false)
   }
 
   if (submitted) {
@@ -52,6 +81,13 @@ export default function WaitlistForm() {
           {loading ? 'Joining...' : 'Join Waitlist'}
         </button>
       </div>
+      
+      {error && (
+        <p className="text-sm text-red-600 mt-2 text-center">
+          {error}
+        </p>
+      )}
+      
       <p className="text-sm text-gray-500 mt-2 text-center">
         No spam. Unsubscribe anytime.
       </p>

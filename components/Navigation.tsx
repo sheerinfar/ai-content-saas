@@ -10,19 +10,22 @@ export default function Navigation() {
           </a>
 
           <div className="flex items-center gap-6">
-            <a href="/" className="text-gray-700 hover:text-indigo-600 font-medium">
-              Home
-            </a>
-            <a href="/create-brand" className="text-gray-700 hover:text-indigo-600 font-medium">
-              Create Brand
-            </a>
-            <a href="/generate" className="text-gray-700 hover:text-indigo-600 font-medium">
-              Generate
-            </a>
-            <a href="/create-brand" className="px-6 py-2 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700">
-              Get Started
-            </a>
-          </div>
+  <a href="/" className="text-gray-700 hover:text-indigo-600 font-medium">
+    Home
+  </a>
+  <a href="/create-brand" className="text-gray-700 hover:text-indigo-600 font-medium">
+    Create Brand
+  </a>
+  <a href="/generate" className="text-gray-700 hover:text-indigo-600 font-medium">
+    Generate
+  </a>
+  <a href="/login" className="text-gray-700 hover:text-indigo-600 font-medium">
+    Login
+  </a>
+  <a href="/signup" className="px-6 py-2 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700">
+    Sign Up
+  </a>
+</div>
         </div>
       </div>
     </nav>
